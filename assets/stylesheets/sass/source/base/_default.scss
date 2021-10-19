@@ -1,0 +1,31 @@
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+body {
+  font-size: 1rem;
+  color: $text-color;
+  font-family: $font-default;
+}
+
+.image__img {
+  max-width: 100%;
+  height: auto;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+}
+
+.bg-light {
+  background-color: $light;
+}

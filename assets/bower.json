@@ -1,0 +1,14 @@
+{
+  "name": "HTML Base",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "",
+    "jquery-ui": "",
+    "font-awesome": "^4.7.0",
+    "Swiper": "",
+    "fancybox": "^3.2.0",
+    "aos": "^2.2.0",
+    "chart.js": "^2.9.3"
+  },
+  "private": true
+}

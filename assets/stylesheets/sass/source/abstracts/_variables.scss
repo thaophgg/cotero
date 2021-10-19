@@ -1,0 +1,54 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+$font-size: 14px;
+$black: #000;
+$white: #fff;
+$gray: #666666;
+$gray-1: #f4f4f4;
+$gray-2: #eeeeee;
+$light: #f7f7f7;
+$primary: #2989CB;
+$primary-light: rgb(39,180,221);
+$secondary: #DB2E27;
+$text-color: #333333;
+$border-color: #eeeeee;
+$font-normal: 400;
+$font-bold: 700;
+$grid-gutter: 10px;
+$grid-gutter-m: 16px;
+$container-gutter: 20px;
+$container-gutter-s: 40px;
+$container-gutter-m: 60px;
+$container-gutter-ml: 80px;
+$container-max: 1170px;
+$section-space: 2em;
+$font-default: 'Roboto', sans-serif;
+
+$line_height: 1.4;
+
+$distance: 60px;
+$distance_mobile: 30px;
+
+/// Container's maximum width
+/// @type Length
+$max-width: 1180px !default;
+
+/// Breakpoints map
+/// @prop {String} keys - Keys are identifiers mapped to a given length
+/// @prop {Map} values - Values are actual breakpoints expressed in pixels
+$breakpoints: (
+    'xl': 1200px,
+    'lg': 992px,
+    'md': 768px,
+    'sm': 576px
+) !default;
+
+/// Relative or absolute URL where all assets are served from
+/// @type String
+/// @example scss - When using a CDN
+/// $base-url: 'http://cdn.example.com/assets/';
+$base-url: '/assets' !default;
+$img-url: '../../../images';
+$font-url: '../../../fonts';
+$bower-url: '../../bower_components';

@@ -1,0 +1,15 @@
+### Sass ###
+assets/stylesheets/sass/dist
+.sass-cache/
+*.css.map
+
+### macOS ###
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+### Bower ###
+bower_components
+.bower-cache
+.bower-registry
+.bower-tmp
