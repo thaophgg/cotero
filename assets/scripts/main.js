@@ -27,147 +27,193 @@ const addClass = curry((className, els) =>
 )
 
 
+const trigger = (eventName, el) => {
+  let event
+  let data = {}
+  if (typeof eventName === 'object') {
+    data = eventName.data
+    eventName = eventName.event
+  }
+  if (typeof window.CustomEvent === 'function') {
+    event = new CustomEvent(eventName, { detail: data })
+  } else {
+    event = document.createEvent('CustomEvent')
+    event.initCustomEvent(eventName, true, true, data)
+  }
+  el.dispatchEvent(event)
+  return el
+}
+
 const hasClass = curry((className, el) => el.classList.contains(className))
 
+
+const whileDo = (pred, fn, initial) =>
+  pred(initial) ? whileDo(pred, fn, fn(initial)) : initial
+
+const matches = (selector, el) =>
+(
+  Element.prototype.matches ||
+  Element.prototype.matchesSelector ||
+  Element.prototype.mozMatchesSelector ||
+  Element.prototype.msMatchesSelector ||
+  Element.prototype.oMatchesSelector ||
+  Element.prototype.webkitMatchesSelector
+).apply(el, [selector])
+
+const closest = curry((selector, el) =>
+  whileDo(
+    target => target && !matches(selector, target) && target.parentNode,
+    target => (target.parentNode === document ? null : target.parentNode),
+    el.parentNode
+  )
+)
+
+
 document.addEventListener("DOMContentLoaded", function(event) {
-  const body = select('body')
-  const sliderEls = selectAll('.js-slider')
-  const sliderLayout4Els = selectAll('.js-slider-layout-4')
-  const sliderMenuEl = selectAll('.js-slideout-menu')
-  const toggleSubMenuEls = selectAll('.js-toggle-sub-menu')
-  const opentMenuBtn = select('.js-open-btn')
-  const closeMenuBtn = select('.js-close-btn')
-  const iconOpenMenuEl = select('img', opentMenuBtn)
-  
-  const dotsEnable = (sliderEl) => {
-    const slideNumbers = selectAll('.js-slider-item', sliderEl).length
-    const slideColumns = getData('columns', sliderEl)
+  const mainEl = select('.js-main')
+  const checkboxAllEl = select('.js-checkbox-all')
+  const checkboxRemoveAllEl = select('.js-checkbox-remove-all')
+  const checkboxActionEls = selectAll('.js-checkbox-action')
+  const checkboxItemEls = selectAll('.js-checkbox-item')
+  const deleteItemEls = selectAll('.js-delete-item')
+  const heartItemEls = selectAll('.js-heart-item')
+  const minusEls = selectAll('.js-minus')
+  const plusEls = selectAll('.js-plus')
+  const closeModalEls = selectAll('.js-close-modal')
+  const openModalEl = select('.js-open-modal')
+  const overlayEl = select('.js-overlay')
+  const modalEl = select('.js-modal')
+  const counponItemEls = selectAll('.js-counpon-item')
+  const codeInputEl = select('.js-code-input')
 
-    return (slideNumbers && slideColumns) ? ((slideNumbers > slideColumns) ? true : false) : true
+  //CART PAGE
+  if(plusEls) {
+    map(plusEl => {
+      plusEl.addEventListener('click', e => {
+        const parentEl = closest('.js-plus-minus', e.target)
+        const quantityEl = select('.js-quantity', parentEl)
+        quantityEl.innerText = parseInt(quantityEl.innerText) + 1
+      })
+    }, plusEls)
   }
 
-  const isMobile = () => {
-    return (window.innerWidth > 992) ? false : true
-  }
-  
-  if (sliderLayout4Els) {
-    map((sliderLayout4El) => {
-      const dotsEnableData =D getData('dots-enable', sliderLayout4El)
-      const prevNextEnableData = getData('prev-next-enable', sliderLayout4El)
-      const mobileVisible = getData('mobile', sliderLayout4El)
-      const slideColumns = getData('columns', sliderLayout4El)
-
-      const options = {
-        groupCells: isMobile() ? '1' : slideColumns,
-        prevNextButtons: isMobile() ? false : ((prevNextEnableData && (prevNextEnableData === 'false')) ? false : dotsEnable(sliderLayout4El)),
-        pageDots: isMobile() ? true : ((dotsEnableData && (dotsEnableData === 'false')) ? false : dotsEnable(sliderLayout4El)),
-        cellAlign: 'left',
-        wrapAround: dotsEnable(sliderLayout4El),
-        contain: true,
-        autoPlay: 4000,
-        watchCSS: (mobileVisible && (mobileVisible === 'true')) ? true : false
-      }
-
-      let slider = null
-      
-      slider = new Flickity(sliderLayout4El, options)
-    }, sliderLayout4Els);
-  }
-  
-  if (sliderEls) {
-    map((sliderEl) => {
-      const options =
-        sliderEl && getData("options", sliderEl)
-          ? JSON.parse(getData("options", sliderEl))
-          : {};
-
-      let slider = null;
-
-      slider = new Flickity(sliderEl, options);
-
-      const pageDots = select('.flickity-page-dots', sliderEl)
-      if(pageDots) {
-        const slideNumbers = selectAll('.js-slider-item', sliderEl).length
-        const slideColumns = getData('columns', sliderEl)
-        if (slideNumbers <= slideColumns) {
-          addClass('hidden', pageDots)
-        }
-      }
-    }, sliderEls);
-  }
-  
-  if (toggleSubMenuEls) {
-    map(toggleSubMenuEl => {
-      toggleSubMenuEl.addEventListener('click', () => {
-        for (let i = 0; i < toggleSubMenuEl.parentNode.childNodes.length; i++) {
-          const content = toggleSubMenuEl.parentNode.childNodes[i]
-
-            if (content.className === 'sub-menu js-sub-menu slideUp') {
-              const innerContent = select('ul', content)
-              innerContent.style.position = 'static'
-              content.style.height = innerContent.offsetHeight + 'px'
-              content.style.opacity = '1'
-              content.classList.remove('slideUp')
-              toggleSubMenuEl.classList.add('is-active')
-            } else if (content.className === 'sub-menu js-sub-menu') {
-              const innerContent = select('ul', content)
-              innerContent.style.position = 'absolute'
-              content.style.height = '0'
-              content.style.opacity = '0'
-              content.classList.add('slideUp')
-              toggleSubMenuEl.classList.remove('is-active')
-            }
+  if(minusEls) {
+    map(minusEl => {
+      minusEl.addEventListener('click', e => {
+        const parentEl = closest('.js-plus-minus', e.target)
+        const quantityEl = select('.js-quantity', parentEl)
+        if (quantityEl.innerText > 1) {
+          quantityEl.innerText = parseInt(quantityEl.innerText) - 1
         }
       })
-    }, toggleSubMenuEls)
+    }, minusEls)
+  }
+  
+  if (checkboxActionEls) {
+    map(checkboxActionEl => {
+      checkboxActionEl.addEventListener('click', e => {
+        const checkboxItem = closest('.js-checkbox-item', checkboxActionEl)
+        if (hasClass('is-active', checkboxItem)) {
+          removeClass('is-active', checkboxItem)
+        } else {
+          addClass('is-active', checkboxItem)
+        }
+      })
+    }, checkboxActionEls)
   }
 
-  if (closeMenuBtn) {
-    closeMenuBtn.addEventListener('click', () => {
-      removeClass('is-show', sliderMenuEl)
-      iconOpenMenuEl.style.opacity = '1'
-      body.style.overflow = 'auto'
-      
-      clearAllBodyScrollLocks()
+  if (deleteItemEls) {
+    map(deleteItemEl => {
+      deleteItemEl.addEventListener('click', () => {
+        const parent = closest('.js-checkbox-item', deleteItemEl)
+        addClass('is-remove', parent)
+        setTimeout(() => {
+          parent.parentNode.removeChild(parent)
+        }, 600)
+      })
+    }, deleteItemEls)
+  }
+
+  if (heartItemEls) {
+    map(heartItemEl => {
+      heartItemEl.addEventListener('click', () => {
+        if (hasClass('is-heart', heartItemEl)) {
+          removeClass('is-heart', heartItemEl)
+        } else {
+          addClass('is-heart', heartItemEl)
+        }
+      })
+    }, heartItemEls)
+  }
+
+  if (checkboxRemoveAllEl) {
+    checkboxRemoveAllEl.addEventListener('click', () => {
+      const checkboxItemActiveEls = selectAll('.is-active', mainEl)
+      map(checkboxItemActiveEl => {
+        addClass('is-remove', checkboxItemActiveEl)
+        setTimeout(() => {
+          checkboxItemActiveEl.parentNode.removeChild(checkboxItemActiveEl)
+        }, 600)
+      }, checkboxItemActiveEls)
     })
   }
-
-  if (opentMenuBtn) {
-    opentMenuBtn.addEventListener('click', () => {
-      addClass('is-show', sliderMenuEl)
-      iconOpenMenuEl.style.opacity = '0'
-      body.style.overflow = 'hidden'
-
-      disableBodyScroll(sliderMenuEl)
-    })
-  }
-});
-
-//js-tabs
-jQuery(document).ready(function ($) {
-  $("[research-data-tab]").click(function () {
-    var tab = $(this).attr("research-data-tab");
-    var data_tab = $('[research-data-tab = "' + tab + '"]');
-    $("[research-data-tab]").removeClass("is-active");
-    $(data_tab).addClass("is-active");
-  });
-  //
-  $("[post-data-tab]").click(function () {
-    var tab = $(this).attr("post-data-tab");
-    var data_tab = $('[post-data-tab = "' + tab + '"]');
-    $("[post-data-tab]").removeClass("is-active");
-    $(data_tab).addClass("is-active");
-  });
-  //scroll top
-  var screen_width = $(window).width();
-  if (screen_width >= 1300) {
-    $(window).scroll(function () {
-      var y = $(window).scrollTop();
-      if ((y > 700) && ( y < 4500)) {
-        $(".banner-sticky").addClass("fix-img");
+  
+  if (checkboxAllEl) {
+    checkboxAllEl.addEventListener('click', e => {
+      if (hasClass('is-checked', e.target)) {
+        removeClass('is-checked', e.target)
+        if (checkboxItemEls) {
+          map(checkboxItemEl => {
+            removeClass('is-active', checkboxItemEl)
+          }, checkboxItemEls)
+        }
       } else {
-        $(".banner-sticky").removeClass("fix-img");
+        addClass('is-checked', e.target)
+        if (checkboxItemEls) {
+          map(checkboxItemEl => {
+            addClass('is-active', checkboxItemEl)
+          }, checkboxItemEls)
+        }
       }
-    });
+    })
+  }
+
+  //COUPON
+  if (closeModalEls) {
+    map(closeEl => {
+      closeEl.addEventListener('click', () => {
+        removeClass('is-active', overlayEl)
+        removeClass('is-active', modalEl)
+
+        const selectedEl = select('.is-active', modalEl)
+        const codeCouponEl = select('.js-code-coupon', selectedEl)
+        const codeCoupon = codeCouponEl.innerText
+        
+        codeInputEl.innerText = codeCoupon
+      })
+    }, closeModalEls)
+  }
+
+  if (openModalEl) {
+    openModalEl.addEventListener('click', () => {
+      addClass('is-active', overlayEl)
+      addClass('is-active', modalEl)
+    })
+  }
+
+  if (counponItemEls) {
+    map((counponItemEl, index1) => {
+      counponItemEl.addEventListener('click', e => {
+        map((counponItemEl, index2) => {
+          if (index1 !== index2) removeClass('is-active', counponItemEl)
+        }, counponItemEls)
+
+        if (hasClass('is-active', e.target)) {
+          removeClass('is-active', e.target)
+        } else {
+          addClass('is-active', e.target)
+        }
+      })
+    }, counponItemEls)
   }
 });

@@ -20,7 +20,7 @@
 </head>
 
 <body>
-	<?php include "./patials/header.php"; ?>
+	<?php //include "./patials/header.php"; ?>
   <script src="./assets/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
   <script src="./assets/bower_components/fancybox/dist/jquery.fancybox.min.js" type="text/javascript"></script>
   <script src="./assets/bower_components/aos/dist/aos.js" type="text/javascript"></script>
