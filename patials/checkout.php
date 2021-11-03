@@ -75,7 +75,7 @@
             </div>
           </form>
 
-          <a href="#" class="checkout__place-order">Plave order</a>
+          <a href="#" class="checkout__place-order">Place order</a>
           <sub class="gray">Lorem Ipsum is simply dummy text of the printing and typesett</sub>
         </div>
       </div>

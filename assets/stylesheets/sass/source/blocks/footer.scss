@@ -1,0 +1,145 @@
+.footer {
+  position: relative;
+  &__top {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    @media (min-width: 1280px) {
+      padding-top: 75px;
+      padding-bottom: 56px;
+    }
+  }
+  &__item {
+    margin-bottom: 20px;
+    &--address,
+    &--contact {
+      padding-bottom: 10px;
+      border-bottom: 1px dashed $text-color;
+    }
+    &--contact {
+      @media (min-width: 768px) {
+        padding-bottom: 46px;
+      }
+    }
+  }
+  &__title {
+    font-weight: $font-bold;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    @media (min-width: 1280px) {
+      font-size: 1.25rem;
+    }
+    &--mb {
+      margin-bottom: 15px;
+    }
+  }
+  &__text {
+    margin-bottom: 10px;
+    a {
+      color: $text-color;
+      transition: all 0.5s;
+      &:hover {
+        color: $primary;
+        text-decoration: none;
+      }
+    }
+  }
+  &__social-link {
+    font-size: 27px;
+    margin-right: 10px;
+    .fa {
+      transition: all 0.5s;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+    .fa-twitter {
+      color: #09ace9;
+    }
+    .fa-youtube-play {
+      color: #ec1313;
+    }
+  }
+  &__icon {
+    color: $primary;
+    padding-right: 7px;
+  }
+  &__bottom {
+    background-color: $primary;
+  }
+  &__text-bot {
+    margin-bottom: 0px;
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+  }
+}
+
+.button-message {
+  position: fixed;
+  display: block;
+  right: 20px;
+  bottom: 70px;
+  width: 50px;
+  cursor: pointer;
+  transition: all 0.5s;
+  z-index: 10;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+  @media (min-width: 768px) {
+    right: 40px;
+    width: 60px;
+  }
+  img {
+    width: 100%;
+  }
+}
+.banner-sticky {
+  &.fix-img {
+    @media (min-width: 1280px) {
+      & .banner-sticky__left,
+      & .banner-sticky__right {
+        top: 30px;
+        opacity: 1;
+      }
+    }
+  }
+  &__left,
+  &__right {
+    display: block;
+    position: fixed;
+    top: 60px;
+    z-index: 2;
+    transition: 0.4s;
+    opacity: 0;
+    a {
+      display: block;
+      width: 100px;
+      @media (min-width: 1600px) {
+        width: auto;
+      }
+      img {
+        width: 100%;
+        @media (min-width: 1600px) {
+          width: auto;
+        }
+      }
+    }
+  }
+  &__left {
+    left: 50%;
+    margin-left: calc((1170px / -2) - 100px);
+    @media (min-width: 1600px) {
+      margin-left: calc((1170px / -2) - 190px);
+    }
+  }
+  &__right {
+    right: 50%;
+    margin-right: calc((1170px / -2) - 100px);
+    @media (min-width: 1600px) {
+      margin-right: calc((1170px / -2) - 190px);
+    }
+  }
+}

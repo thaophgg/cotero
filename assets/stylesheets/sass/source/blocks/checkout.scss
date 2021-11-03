@@ -1,3 +1,7 @@
+.checkout {
+  margin-top: 2em;
+}
+
 .checkout__wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -198,8 +202,14 @@
   color: white;
   text-align: center;
   background-color: $primary;
-  border: 1px solod $primary;
+  border: 1px solid $primary;
   text-transform: uppercase;
   border-radius: 4px;
   margin-bottom: 1em;
+  transition: 0.4s;
+
+  &:hover {
+    background-color: white;
+    color: $primary;
+  }
 }

@@ -2,14 +2,19 @@
 // This file contains fonts, helpers, stylesheets default
 // -----------------------------------------------------------------------------
 @charset "UTF-8";
+@import "library/flickity";
+@import "abstracts/_variables";
+@import "base/_reboot";
+@import "base/_grid";
 @import "abstracts/_variables";
 @import "abstracts/_mixins";
 @import "base/_default";
-@import "layout/header";
-@import "layout/footer";
+@import "blocks/header";
+@import "blocks/footer";
 @import "blocks/cart";
 @import "blocks/coupon-modal";
 @import "blocks/checkout";
 @import "blocks/track-banner";
 @import "blocks/track-form";
 @import "blocks/track-process";
+@import "blocks/recently-viewed";
