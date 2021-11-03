@@ -26,6 +26,14 @@ a:hover {
   text-decoration: none;
 }
 
-.bg-light {
-  background-color: $light;
+.gray {
+  color: $gray;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.dark {
+  color: $dark;
 }

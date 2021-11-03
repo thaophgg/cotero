@@ -1,0 +1,30 @@
+.track-banner {
+  background-color: $dark;
+  text-align: center;
+  line-height: 1.45;
+  color: white;
+  
+  @media (min-width: 768px) {
+    padding-bottom: 100px;
+  }
+}
+
+.track-banner__title {
+  font-size: 24px;
+  margin-bottom: 0.75em;
+  font-weight: 600;
+
+  @media (min-width: 768px) {
+    font-size: 32px;
+  }
+}
+
+.track-banner__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  max-width: 600px;
+  margin: auto;
+}
